@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-family: sans-serif;
+}
+
+header{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to top, yellow 1%, white 3%);
+    background-image: linear-gradient(to right, yellow 1%, rgb(255, 255, 255) 15%, white 85%, yellow 99%); 
+    border-bottom: 1px solid yellow;
+}
+
+.logo{
+    margin-top: -30px;
+    margin-left: -170px;
+    height: 170px;
+    width: 300px;
+}
+
+.link{
+    margin-left: 20px;
+    margin-top: -60px;
+    color: rgb(204, 204, 20);
+    font-size: large;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+}
+
+.link-first{
+    margin-left: 160px;
+    margin-top: -60px;
+    color: rgb(204, 204, 20);
+    font-size: large;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+}

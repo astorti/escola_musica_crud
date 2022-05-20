@@ -1,12 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import logo from '../assets/logo_escola_musical.png';
 
 const Header = () => {
     return(
         <header>
-            <h1>Escola Musical</h1>
             <div>
-                <NavLink to='/' className='link' activeClassName='active' exact>
+                <img className="logo" src={logo} alt="logo"/>
+            </div>
+            
+            <div className="link">
+                <NavLink to='/' className='link-first' activeClassName='active' exact>
                     Home
                 </NavLink>
                 <NavLink to='/instruments' className='link' activeClassName='active' exact>
