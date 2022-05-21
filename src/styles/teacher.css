@@ -1,0 +1,55 @@
+button{
+    margin: 7px auto;
+    background: greenyellow;
+    border-radius: 5px;
+    padding: 3px 5px;
+}
+
+.list-teacher{
+    background: rgb(252, 252, 166);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 1500px;
+    margin-top: 10px;
+    padding: 10px;
+    border: solid 3px rgb(250, 250, 46);
+    border-radius: 5px;
+}
+
+thead tr{
+    padding: 5px;
+    background: yellow;
+    width: 1500px;
+    display: flex;
+    border-radius: 5px;
+    border: solid 1px black;   
+}
+
+th{
+    width: 300px;
+    display: flex;
+}
+
+.table-body{
+    margin: 7px;
+    padding: 5px 0px;
+    background: #FFF;
+    width: 1500px;
+    display: flex;
+    border: solid 1px yellow;
+    border-radius: 5px;
+}
+
+td{
+    width: 300px;
+}
+
+.td-name-width{
+    width: 400px;
+}
+
+.td-action-width{
+    width: 200px;
+}

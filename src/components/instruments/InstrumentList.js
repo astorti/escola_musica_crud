@@ -1,5 +1,6 @@
 import React from "react";
 import '../../styles/instruments.css';
+import '../../index.css'
 
 const InstrumentList = () => {
 
