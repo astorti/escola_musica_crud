@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/teacher.css';
+import '../../styles/teacherStudentList.css';
 
 const TeacherList = () => {
 
@@ -13,7 +13,7 @@ const TeacherList = () => {
             
             <button onClick={handleNewTacher}>Novo cadastro</button>
 
-            <div className="list-teacher">  
+            <div className="list-teacher-student">  
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
