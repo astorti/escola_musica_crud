@@ -5,6 +5,22 @@ button{
     padding: 3px 5px;
 }
 
+.new{
+    display: flex;
+    margin-top: 10px;
+    width: 150px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    background: greenyellow;
+    color: rgb(83, 73, 73);
+    font-size: medium;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+}
+
 .list-teacher-student{
     background: rgb(252, 252, 166);
     display: flex;

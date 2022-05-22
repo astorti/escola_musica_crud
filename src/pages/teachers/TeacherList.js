@@ -1,17 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import '../../styles/teacherStudentList.css';
 
 const TeacherList = () => {
 
-    const handleNewTacher = () => {
-        alert("New Teacher")
-    }
     return(
         <div className="container">
             
             <h2>Professores</h2>
             
-            <button onClick={handleNewTacher}>Novo cadastro</button>
+            <Link className="new" to='/teacherform'>Novo Cadastro</Link>
 
             <div className="list-teacher-student">  
                 <thead>

@@ -1,9 +1,10 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from "../components/Header";
-import InstrumentList from "../components/instruments/InstrumentList";
-import TeacherList from "../components/teachers/TeacherList";
-import StudentList from "../components/students/StudentList";
+import InstrumentList from "../pages/instruments/InstrumentList";
+import TeacherList from "../pages/teachers/TeacherList";
+import StudentList from "../pages/students/StudentList";
+import NewTeacherForm from "../pages/teachers/TeacherForm";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route component={InstrumentList} path='/instruments' exact={true}/>
           <Route component={TeacherList} path='/teachers' exact={true}/>
           <Route component={StudentList} path='/students' exact={true}/>
+          <Route component={NewTeacherForm} path='/teacherform' exact={true}/>
         </Switch>
       </div>
     </BrowserRouter>
