@@ -5,6 +5,7 @@ import InstrumentList from "../pages/instruments/InstrumentList";
 import TeacherList from "../pages/teachers/TeacherList";
 import StudentList from "../pages/students/StudentList";
 import NewTeacherForm from "../pages/teachers/TeacherForm";
+import NewStudentForm from "../pages/students/StudentForm";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route component={TeacherList} path='/teachers' exact={true}/>
           <Route component={StudentList} path='/students' exact={true}/>
           <Route component={NewTeacherForm} path='/teacherform' exact={true}/>
+          <Route component={NewStudentForm} path='/studentform' exact={true}/>
         </Switch>
       </div>
     </BrowserRouter>
