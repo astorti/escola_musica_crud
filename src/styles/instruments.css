@@ -16,6 +16,7 @@ form input{
     border: 1px solid black;
     border-radius: 3px;
     width: 50px;
+    height: 20px;
     cursor: pointer;
 }
 
@@ -26,6 +27,7 @@ form input{
     width: 63px;
     cursor: pointer;
     margin-left: 5px;
+    height: 22px;
 }
 
 h2{

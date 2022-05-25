@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../styles/instruments.css';
+import { v1 as uuidv1 } from 'uuid';
 import '../../index.css'
 
 const InstrumentList = () => {
 
+    const [ instrument, setInstrument ] = useState([]);
+    const [ nameInstrument, setNameInstrument ] = useState('');
+
+    const handleSaveInstrument = (e) => {
+        e.preventDefault();
+        let newInstruent = {
+            id: uuidv1(),
+            nameInstrument
+        }
+        setInstrument([newInstruent, ...instrument]);
+        setNameInstrument('');
+        console.log(instrument)
+    }
+
+    const handleCancelInput = () => {
+        setNameInstrument('');
+    }
+
     const handleEdit = () => {
-        console.log("OK")
+        alert("editado")
     }
 
     return(
@@ -13,10 +32,10 @@ const InstrumentList = () => {
             <div>
                 <h1>Cadastro de Instrumentos</h1>
             </div>
-            <form>
-                <input type="text" placeholder="Novo Instrumento" />
-                <button className="save-button">Salvar</button>
-                <button className="cancel-button">Cancelar</button>
+            <form onSubmit={handleSaveInstrument}>
+                <input type="text" placeholder="Novo Instrumento" value={nameInstrument} required onChange={(e) => setNameInstrument(e.target.value)} />
+                <input type="submit" className="save-button" value="Salvar" />
+                <button onClick={handleCancelInput} className="cancel-button">Cancelar</button>
             </form>
 
             <h2>Instrumentos</h2>
