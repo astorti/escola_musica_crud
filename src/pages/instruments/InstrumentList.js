@@ -7,15 +7,17 @@ const InstrumentList = () => {
 
     const [ instrument, setInstrument ] = useState([]);
     const [ nameInstrument, setNameInstrument ] = useState('');
+    const [ noData, setNoData ] = useState(true)
 
     const handleSaveInstrument = (e) => {
         e.preventDefault();
-        let newInstruent = {
+        let newInstrument = {
             id: uuidv1(),
             nameInstrument
         }
-        setInstrument([newInstruent, ...instrument]);
+        setInstrument([newInstrument, ...instrument]);
         setNameInstrument('');
+        hasData()
         console.log(instrument)
     }
 
@@ -27,11 +29,19 @@ const InstrumentList = () => {
         alert("editado")
     }
 
+    const hasData = () => {
+        if (noData) {
+            setNoData(false)
+        }
+    }
+
     return(
         <div className="container">
+
             <div>
                 <h1>Cadastro de Instrumentos</h1>
-            </div>
+             </div>
+             
             <form onSubmit={handleSaveInstrument}>
                 <input type="text" placeholder="Novo Instrumento" value={nameInstrument} required onChange={(e) => setNameInstrument(e.target.value)} />
                 <input type="submit" className="save-button" value="Salvar" />
@@ -39,32 +49,24 @@ const InstrumentList = () => {
             </form>
 
             <h2>Instrumentos</h2>
-                
-            <div className="list">              
-                <ul>
-                    <li>
-                        Violão
-                        <div>
-                            <input onClick={handleEdit} className="edit" type="submit" value='Editar'/>
-                            <input className="exclude" type="submit" value='Excluir'/>
-                        </div>
-                    </li>
-                    <li>
-                        Teclado
-                        <div>
-                            <input className="edit" type="submit" value='Editar'/>
-                            <input className="exclude" type="submit" value='Excluir'/>
-                        </div>
-                    </li>
-                    <li>
-                        Piano
-                        <div>
-                            <input className="edit" type="submit" value='Editar'/>
-                            <input className="exclude" type="submit" value='Excluir'/>
-                        </div>
-                    </li>
-                    
-                </ul>
+            
+            <div className="list"> 
+                {noData === true ? 
+                    (<span>Não há instrumentos cadastrados</span>
+                ) : (         
+                    <ul>
+                        { instrument.map(instrumenList => {
+                            return (
+                                <li>
+                                    {instrumenList.nameInstrument}
+                                    <div>
+                                        <input onClick={handleEdit} className="edit" type="submit" value='Editar'/>
+                                        <input className="exclude" type="submit" value='Excluir'/>
+                                    </div>
+                                </li>
+                        )})}        
+                    </ul>
+                )}
             </div>
             
         </div>
