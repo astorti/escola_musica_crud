@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { v1 as uuidv1 } from 'uuid';
 import "../../styles/teacherStudentForm.css";
 import { Link } from "react-router-dom";
@@ -35,6 +35,18 @@ const NewStudentForm = () => {
         setPhone('');
         console.log(student)
     })
+
+    useEffect(() => {
+        localStorage.setItem('students', JSON.stringify(student));
+    }, [student])
+
+    useEffect(() => {
+        const studentStorage = JSON.parse(localStorage.getItem('students'));
+        if (studentStorage) {
+            setStudent(studentStorage)
+        }
+    }, [])
+
 
     return(
         <div className="form-add">

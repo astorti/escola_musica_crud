@@ -24,7 +24,7 @@ const TeacherList = () => {
 
                 <tbody>
                     <tr className="table-body">
-                        <td>Maria Conceição Ferreira Alves Milano</td>
+                        <td>professor1</td>
                         <td>professor1@mail.com</td>
                         <td>(xx) 1234-5678</td>
                         <td>Violão</td>
