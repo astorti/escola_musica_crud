@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import '../../styles/teacherStudentList.css';
 
 const TeacherList = () => {
+
+    const [ teacher, setTeacher ] = useState([])
+
+    useEffect(() => {
+        const storage = JSON.parse(localStorage.getItem('teachers'));
+        if (storage) {
+            setTeacher(storage)
+        }
+    }, [])
 
     return(
         <div className="container">
@@ -23,29 +32,22 @@ const TeacherList = () => {
                 </thead>  
 
                 <tbody>
-                    <tr className="table-body">
-                        <td>professor1</td>
-                        <td>professor1@mail.com</td>
-                        <td>(xx) 1234-5678</td>
-                        <td>Violão</td>
-                        <div className="button-align">
-                            <input className="view" type="submit" value='Consultar'/>
-                            <input className="edit" type="submit" value='Editar'/>
-                            <input className="exclude" type="submit" value='Excluir'/>
-                        </div>
-                    </tr>
-
-                    <tr className="table-body">
-                        <td>Professor 2</td>
-                        <td>professor2@mail.com</td>
-                        <td>(xx) 1234-5678</td>
-                        <td>Piano</td>
-                        <div>
-                            <input className="view" type="submit" value='Consultar'/>
-                            <input className="edit" type="submit" value='Editar'/>
-                            <input className="exclude" type="submit" value='Excluir'/>
-                        </div>
-                    </tr>
+                    {teacher.map(teacherList => {
+                        return (
+                            <tr className="table-body">
+                                <td>{teacherList.name}</td>
+                                <td>{teacherList.email}</td>
+                                <td>{teacherList.phone}</td>
+                                <td>{teacherList.instrument}</td>
+                                <div className="button-align">
+                                    <input className="view" type="submit" value='Consultar'/>
+                                    <input className="edit" type="submit" value='Editar'/>
+                                    <input className="exclude" type="submit" value='Excluir'/>
+                                </div>
+                            </tr>
+                        )
+                    })}
+                    
                 </tbody>          
                 
             </div>

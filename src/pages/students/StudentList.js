@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import '../../styles/teacherStudentList.css';
 import { Link } from "react-router-dom";
 
 const StudentList = () => {
+
+    const [ student, setStudent ] = useState([])
+
+    useEffect(() => {
+        const storage = JSON.parse(localStorage.getItem('students'));
+        if (storage) {
+            setStudent(storage)
+        }
+    },[])
+       
     return(
         <div className="container">
             
@@ -10,8 +20,7 @@ const StudentList = () => {
             
             <Link className="new" to='/studentform'>Novo Cadastro</Link>
 
-            <div className="list-teacher-student">  
-                <thead>
+                <thead className="list-teacher-student">
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>
@@ -22,32 +31,25 @@ const StudentList = () => {
                 </thead>  
 
                 <tbody>
-                    <tr className="table-body">
-                        <td>Aluno1</td>
-                        <td>aluno1@mail.com</td>
-                        <td>(xx) 1234-5678</td>
-                        <td>Violão</td>
-                        <div className="button-align">
-                            <input className="view" type="submit" value='Consultar'/>
-                            <input className="edit" type="submit" value='Editar'/>
-                            <input className="exclude" type="submit" value='Excluir'/>
-                        </div>
-                    </tr>
-
-                    <tr className="table-body">
-                        <td>Aluno2</td>
-                        <td>aluno2@mail.com</td>
-                        <td>(xx) 1234-5678</td>
-                        <td>Piano</td>
-                        <div>
-                            <input className="view" type="submit" value='Consultar'/>
-                            <input className="edit" type="submit" value='Editar'/>
-                            <input className="exclude" type="submit" value='Excluir'/>
-                        </div>
-                    </tr>
+                    {student.map(studentList => {
+                        return (
+                            <tr className="table-body">
+                                <td>{studentList.name}</td>
+                                <td>{studentList.email}</td>
+                                <td>{studentList.phone}</td>
+                                <td>{studentList.instrument}</td>
+                                <div className="button-align">
+                                    <input className="view" type="submit" value='Consultar'/>
+                                    <input className="edit" type="submit" value='Editar'/>
+                                    <input className="exclude" type="submit" value='Excluir'/>
+                                </div>
+                            </tr>
+                        )
+                    })}
+                    
                 </tbody>          
                 
-            </div>
+            
             
         </div>
     )

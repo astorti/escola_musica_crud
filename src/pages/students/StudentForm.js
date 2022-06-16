@@ -47,7 +47,6 @@ const NewStudentForm = () => {
         }
     }, [])
 
-
     return(
         <div className="form-add">
             <h1>Novo Cadastro</h1>
