@@ -13,6 +13,15 @@ const TeacherList = () => {
         }
     }, [])
 
+    const handleDelete = (id) => {
+        let filterTeacher = teacher.filter((teacherList) => {
+            return(teacherList.id !== id)
+        })
+
+        setTeacher(filterTeacher);
+        localStorage.setItem('teachers', JSON.stringify(filterTeacher))
+    }
+
     return(
         <div className="container">
             
@@ -42,7 +51,7 @@ const TeacherList = () => {
                                 <div className="button-align">
                                     <input className="view" type="submit" value='Consultar'/>
                                     <input className="edit" type="submit" value='Editar'/>
-                                    <input className="exclude" type="submit" value='Excluir'/>
+                                    <input onClick={ () => handleDelete(teacherList.id)} className="exclude" type="submit" value='Excluir'/>
                                 </div>
                             </tr>
                         )

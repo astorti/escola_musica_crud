@@ -12,6 +12,16 @@ const StudentList = () => {
             setStudent(storage)
         }
     },[])
+
+    const handleDelete = (id) => {
+        let filterStudent = student.filter((studentList) => {
+            return(studentList.id !== id)
+        })
+
+        setStudent(filterStudent);
+        localStorage.setItem('students', JSON.stringify(filterStudent))
+    }
+
        
     return(
         <div className="container">
@@ -41,7 +51,7 @@ const StudentList = () => {
                                 <div className="button-align">
                                     <input className="view" type="submit" value='Consultar'/>
                                     <input className="edit" type="submit" value='Editar'/>
-                                    <input className="exclude" type="submit" value='Excluir'/>
+                                    <input onClick={ () => handleDelete(studentList.id)} className="exclude" type="submit" value='Excluir'/>
                                 </div>
                             </tr>
                         )
