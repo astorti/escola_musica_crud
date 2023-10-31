@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: top;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    height: 80vh;
+    background-image: linear-gradient(to top, yellow 1%, white 3%);
+    background-image: linear-gradient(to right, yellow 1%, rgb(255, 255, 255) 15%, white 85%, yellow 99%);     
+}
+
+.listView {
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    width: 600px;
+    border: 3px solid yellow;
+    border-radius: 15px;
+    padding: 40px;
+    margin-top: 30px;
+    background-color: rgb(248, 248, 199);
+}
+
+.itemListView{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid black;
+    margin-bottom: 25px;
+}
+
+.itemListView span{
+    width: 150px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}

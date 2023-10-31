@@ -3,101 +3,119 @@ import '../../styles/instruments.css';
 import { v1 as uuidv1 } from 'uuid';
 import '../../index.css'
 
+import { api } from "../../services/api";
+
 const InstrumentList = () => {
 
-    const [ instrument, setInstrument ] = useState([]);
-    const [ nameInstrument, setNameInstrument ] = useState('');
-    const [ noData, setNoData ] = useState(true)
-
+    const [instrument, setInstrument] = useState([])
+    const [nameInstrument, setNameInstrument] = useState('');
+    const [upDate, setUpDate] = useState('');
     
-    const handleSaveInstrument = ((e) => {
+    const handleSaveInstrument = (e) => {
         e.preventDefault();
-        let newInstrument = {
+        api.post(`/instruments`, {
             id: uuidv1(),
-            nameInstrument
-        }
-        setInstrument([newInstrument, ...instrument]);
-        setNameInstrument('');
-        hasData()
-        console.log(instrument)
-    })
+            name: nameInstrument
+        }) 
+        setNameInstrument('')
+    }
 
     useEffect(() => {
-        localStorage.setItem('instruments', JSON.stringify(instrument));
-    },[instrument]);
-    
-    
-    useEffect(() => {
-        const instrumentStorage = JSON.parse(localStorage.getItem('instruments'));
-        if (instrumentStorage) {
-            setInstrument(instrumentStorage)
-        }
-    },[])
+        handleListInstruments();
+    }, [instrument])
 
+    const handleListInstruments = async () => {
+        try {
+            const { data } = await api.get(`/instruments`);
+            setInstrument(data)
+        } catch (e) {
+            alert("Houve uma falha no sistema");
+        }
+    }
     
     const handleCancelInput = () => {
         setNameInstrument('');
     }
 
-    const handleEdit = () => {
-        alert("editado")
+    const handleEdit = (editInstrument) => {
+        setNameInstrument(editInstrument.name)
+        setUpDate(editInstrument)
     }
 
-    
+    const handleUpdate = () => {
+        if (upDate.name === undefined) {
+            alert("Este instrumento não está cadatrado. Não é possivel atualizar.")
+        } else {
+            api.put(`/instruments/${upDate.id}`, {
+                id: upDate.id,
+                name: nameInstrument
+            })
+            alert(upDate.name + " atualizado para " + nameInstrument)
+        }
+    }
+
     const handleDelete = (id) => {
-        let filterInstrument = instrument.filter((instrumenList) => {
-            return(instrumenList.id !== id)
-        })
-
-        setInstrument(filterInstrument);
-        localStorage.setItem('instruments', JSON.stringify(filterInstrument))
-
-        hasNoData()
+        api.delete(`/instruments/${id}`)
+        handleListInstruments()
+        console.log(id)
     }
     
-    const hasData = () => {
-        if (noData) {
-            setNoData(false)
-        }
-        console.log(noData, instrument.length)
-    }
-    
-    const hasNoData = () => {
-        if(instrument.length <= 1) {
-            setNoData(true)
-        }
-        
-        console.log(noData, instrument.length)
-    
-    }
-        
     return(
         <div className="container">
 
             <div>
                 <h1>Cadastro de Instrumentos</h1>
-             </div>
-             
-            <form onSubmit={handleSaveInstrument}>
+            </div>
+            
+            <form >
                 <input type="text" placeholder="Novo Instrumento" value={nameInstrument} required onChange={(e) => setNameInstrument(e.target.value)} />
-                <input type="submit" className="save-button" value="Salvar" />
-                <button onClick={handleCancelInput} className="cancel-button">Cancelar</button>
+                <button
+                    onClick={handleSaveInstrument}
+                    type="submit"
+                    className="save-button"
+                >
+                    Salvar
+                </button>
+                <button
+                    onClick={handleUpdate}
+                    className="edit-button"
+                >
+                    Atualizar
+                </button>
+                <button
+                    onClick={handleCancelInput}
+                    className="cancel-button"
+                >
+                    Cancelar
+                </button>
+
             </form>
+            
 
             <h2>Instrumentos</h2>
             
             <div className="list"> 
-                {noData === true ? 
+                {!instrument.length ? 
                     (<span>Não há instrumentos cadastrados</span>
                 ) : (         
                     <ul>
                         { instrument.map(instrumenList => {
                             return (
                                 <li key={instrumenList.id}>
-                                    {instrumenList.nameInstrument}
+                                    {instrumenList.name}
                                     <div>
-                                        <input onClick={handleEdit} className="edit" type="submit" value='Editar'/>
-                                        <input onClick={ () => handleDelete(instrumenList.id)} type='submit' className="exclude" value='Excluir'/>
+                                        <input
+                                            onClick={() => handleEdit(instrumenList)}
+                                            className="edit"
+                                            type="submit"
+                                            value='Editar'
+                                        />
+                                        <input
+                                            onClick={() => handleDelete(instrumenList.id)}
+                                            type='submit'
+                                            className="exclude"
+                                            value='Excluir'
+                                        />
                                     </div>
                                 </li>
                         )})}        

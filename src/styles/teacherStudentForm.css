@@ -1,27 +1,28 @@
 .form-add{
-    margin-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.form-add h1{
+h1{
+    margin-top: 30px;
     font-size: 1.5em;
 }
 
-.form-add h2{
-    font-size: 1.3em;
+h2{
+    font-size: 1.5em;
 }
 
 .form-add form{
-    margin-top: 20px;
+    margin: 20px;
     width: 500px;
 }
 
 .form-add input[type='text']{
     width: 470px;
-    height: 20px;
+    height: 10px;
+    margin-bottom: -15px
 }
 
 .form-add input[type='submit']{
@@ -40,7 +41,7 @@
     align-items: center;
     width: 100px;
     margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
     height: 15px;
     background: rgb(148, 249, 253);
     border: 1px solid black;
@@ -49,10 +50,32 @@
     text-decoration: none;
     color: black;
     font-size: 0.9em;
+    padding: 1px;
 }
 
 .save-form-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    margin-left: 10px;
+    margin-top: 20px;
+    height: 18px;
     background: greenyellow;
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.edit-form-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    margin-left: -150px;
+    margin-top: 20px;
+    height: 18px;
+    background: yellow;
     border: 1px solid black;
     border-radius: 3px;
     cursor: pointer;

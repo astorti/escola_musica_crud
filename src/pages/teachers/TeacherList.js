@@ -1,25 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import '../../styles/teacherStudentList.css';
+import { api } from "../../services/api";
 
 const TeacherList = () => {
 
-    const [ teacher, setTeacher ] = useState([])
+    const navigate = useNavigate();
+
+    const [teacher, setTeacher] = useState([])
 
     useEffect(() => {
-        const storage = JSON.parse(localStorage.getItem('teachers'));
-        if (storage) {
-            setTeacher(storage)
+        handleListTeachers();
+    }, [teacher])
+
+    const handleListTeachers = async () => {
+        try {
+            const { data } = await api.get(`/teachers`);
+            setTeacher(data)
+        } catch (e) {
+            alert("Houve uma falha no sistema");
         }
-    }, [])
+    }
 
     const handleDelete = (id) => {
-        let filterTeacher = teacher.filter((teacherList) => {
-            return(teacherList.id !== id)
-        })
+        api.delete(`/teachers/${id}`)
+        handleListTeachers();
+    }
 
-        setTeacher(filterTeacher);
-        localStorage.setItem('teachers', JSON.stringify(filterTeacher))
+    const handleView = (teacherList) => {
+        localStorage.setItem('teacher', JSON.stringify(teacherList))
+        navigate('/teacherview')
+    }
+
+    const handleEdit = (teacherList) => {
+        localStorage.setItem('teacher', JSON.stringify(teacherList))
+        navigate('/teacherform')
+    }
+
+    const handleNewTeacher = () => {
+        let newTeacher = []
+        localStorage.setItem('teacher', JSON.stringify(newTeacher))
+        navigate('/teacherform')
     }
 
     return(
@@ -27,16 +48,15 @@ const TeacherList = () => {
             
             <h2>Professores</h2>
             
-            <Link className="new" to='/teacherform'>Novo Cadastro</Link>
+            <button onClick={handleNewTeacher} className="new" >Novo Cadastro</button>
 
-            <div className="list-teacher-student">  
-                <thead>
+                <thead className="list-teacher-student">
                     <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Telefone</th>
-                        <th scope="col">Instrumento</th>
-                        <th scope="col">Ações</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Instrumento</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>  
 
@@ -49,18 +69,19 @@ const TeacherList = () => {
                                 <td>{teacherList.phone}</td>
                                 <td>{teacherList.instrument}</td>
                                 <div className="button-align">
-                                    <input className="view" type="submit" value='Consultar'/>
-                                    <input className="edit" type="submit" value='Editar'/>
-                                    <input onClick={ () => handleDelete(teacherList.id)} className="exclude" type="submit" value='Excluir'/>
+                                    <input onClick={ () => handleView(teacherList)} className="view" type="submit" value='Consultar'/>
+                                    <input onClick={ () => handleEdit(teacherList)} className="edit" type="submit" value='Editar'/>
+                                    <input
+                                        onClick={() => handleDelete(teacherList.id)}
+                                        className="exclude"
+                                        type="submit"
+                                        value='Excluir'
+                                    />
                                 </div>
                             </tr>
                         )
-                    })}
-                    
-                </tbody>          
-                
-            </div>
-            
+                    })}    
+                </tbody>                      
         </div>
     )
 }

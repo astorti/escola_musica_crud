@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { v1 as uuidv1 } from 'uuid';
 import "../../styles/teacherStudentForm.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 const NewTeacherForm = () => {
-    const [teacher, setTeacher] = useState([]);
+    const navigate = useNavigate();
+
     const [name, setName] = useState('')
     const [instrument, setInstrument] = useState('')
     const [adress, setAdress] = useState('')
@@ -12,20 +14,21 @@ const NewTeacherForm = () => {
     const [state, setState] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    const [upDate, setUpDate] = useState('');
+    
 
-    const handleSubmitTeacher = ((e) => {
+    const handleSubmitTeacher = (e) => {
         e.preventDefault();
-        let newTeacher = {
+        api.post(`/teachers`, {
             id: uuidv1(),
-            name,
-            instrument,
-            adress,
-            city,
-            state,
-            email,
-            phone
-        }
-        setTeacher([newTeacher, ...teacher])
+            name: name,
+            instrument: instrument,
+            adress: adress,
+            city: city,
+            state: state,
+            email: email,
+            phone: phone
+        }) 
         setName('');
         setInstrument('');
         setAdress('');
@@ -33,25 +36,45 @@ const NewTeacherForm = () => {
         setState('');
         setEmail('');
         setPhone('');
+
+        navigate('/teachers')
+    }
+
+    useEffect(() => {
+        let currentTeacher = localStorage.getItem("teacher")
+        let teacher = JSON.parse(currentTeacher)
+        setUpDate(teacher.id)
+        setName(teacher.name);
+        setInstrument(teacher.instrument);
+        setAdress(teacher.adress);
+        setCity(teacher.city);
+        setState(teacher.state);
+        setEmail(teacher.email);
+        setPhone(teacher.phone);
         console.log(teacher)
-    })
-
-    useEffect(() => {
-        localStorage.setItem('teachers', JSON.stringify(teacher));
-    }, [teacher])
-
-    useEffect(() => {
-        const teacherStorage = JSON.parse(localStorage.getItem('teachers'));
-        if (teacherStorage) {
-            setTeacher(teacherStorage)
-        }
     }, [])
 
+    const handleEdit = () => {
+        api.put(`/teachers/${upDate}`, {
+            id: upDate,
+            name: name,
+            instrument: instrument,
+            adress: adress,
+            city: city,
+            state: state,
+            email: email,
+            phone: phone
+        })
+        alert("Cadastro atualizado")
+        setUpDate('')
+        navigate("/teachers")
+    }
+
     return(
-        <div className="form-add">
+        <div className="container">
             <h1>Novo Cadastro</h1>
             <h2>Professor</h2>
-            <div>
+            <div className="form-add">
                 <form onSubmit={handleSubmitTeacher}>
                     <input type="text" placeholder="Nome" value={name} required onChange={(e) => setName(e.target.value)} />
                     <input type="text" placeholder="Instrumento" value={instrument} required onChange={(e) => setInstrument(e.target.value)} />
@@ -62,7 +85,8 @@ const NewTeacherForm = () => {
                     <input type="text" placeholder="Telefone" value={phone} required onChange={(e) => setPhone(e.target.value)} />
                     <div className="align-input-submit">
                         <Link className="back-form-button" to='/teachers'>Voltar</Link>
-                        <input className="save-form-button" type="submit" value="Salvar"/>
+                        <button className="save-form-button" type="submit" >Salvar</button>
+                        <button onClick={handleEdit} className="edit-form-button" >Atualizar</button>
                     </div>
                     
                 </form>

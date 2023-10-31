@@ -1,34 +1,54 @@
 import React, { useEffect, useState} from "react";
 import '../../styles/teacherStudentList.css';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 const StudentList = () => {
+
+    const navigate = useNavigate();
 
     const [ student, setStudent ] = useState([])
 
     useEffect(() => {
-        const storage = JSON.parse(localStorage.getItem('students'));
-        if (storage) {
-            setStudent(storage)
+        handleListStudents();
+    }, [student])
+
+    const handleListStudents = async () => {
+        try {
+            const { data } = await api.get(`/students`);
+            setStudent(data)
+        } catch (e) {
+            alert("Houve uma falha no sistema");
         }
-    },[])
-
-    const handleDelete = (id) => {
-        let filterStudent = student.filter((studentList) => {
-            return(studentList.id !== id)
-        })
-
-        setStudent(filterStudent);
-        localStorage.setItem('students', JSON.stringify(filterStudent))
     }
 
-       
+    const handleDelete = (id) => {
+        api.delete(`/students/${id}`)
+        handleListStudents();
+    }
+
+    const handleView = (studentList) => {
+        localStorage.setItem('student', JSON.stringify(studentList))
+        navigate('/studentview')
+    }
+
+    const handleEdit = (studentList) => {
+        localStorage.setItem('student', JSON.stringify(studentList))
+        navigate('/studentform')
+    }
+
+    const handleNewStudent = () => {
+        let newStudent = []
+        localStorage.setItem('student', JSON.stringify(newStudent))
+        navigate('/studentform')
+    }
+
     return(
         <div className="container">
             
             <h2>Alunos</h2>
             
-            <Link className="new" to='/studentform'>Novo Cadastro</Link>
+            <button onClick={handleNewStudent} className="new">Novo Cadastro</button>
 
                 <thead className="list-teacher-student">
                     <tr>
@@ -49,18 +69,19 @@ const StudentList = () => {
                                 <td>{studentList.phone}</td>
                                 <td>{studentList.instrument}</td>
                                 <div className="button-align">
-                                    <input className="view" type="submit" value='Consultar'/>
-                                    <input className="edit" type="submit" value='Editar'/>
-                                    <input onClick={ () => handleDelete(studentList.id)} className="exclude" type="submit" value='Excluir'/>
+                                    <input onClick={ () => handleView(studentList)} className="view" type="submit" value='Consultar'/>
+                                    <input onClick={ () => handleEdit(studentList)} className="edit" type="submit" value='Editar'/>
+                                    <input
+                                        onClick={() => handleDelete(studentList.id)}
+                                        className="exclude"
+                                        type="submit"
+                                        value='Excluir'
+                                    />
                                 </div>
                             </tr>
                         )
-                    })}
-                    
+                    })}    
                 </tbody>          
-                
-            
-            
         </div>
     )
 }
